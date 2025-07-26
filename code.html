@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do you love me?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #fce4ec;
+}
+.container {
+    text-align: center;
+    background-color: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+}
+.gif-container img, .gif-container video {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+.buttons-container button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+    font-weight: bold;
+}
+#yes-btn {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+}
+#yes-btn:hover {
+    background-color: #45a049;
+}
+#no-btn {
+    background-color: #f44336; /* Rojo */
+    color: white;
+    position: relative;
+}
+#no-btn:hover {
+    background-color: #da190b;
+}
+.result-container {
+    display: none;
+}
+.result-container h2 {
+    font-size: 24px;
+    color: #333;
+}
+</style>
+<body>
+
+    <div class="container">
+        <!-- Contenedor de la pregunta inicial -->
+        <div id="question-container">
+            <div class="gif-container">
+                <!-- Usamos un placeholder para el GIF inicial -->
+                <img src="img1.gif" alt="GIF inicial">
+            </div>
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Are you a dog?</h2>
+            <div class="buttons-container">
+                <button id="yes-btn">Yes</button>
+                <button id="no-btn">No</button>
+            </div>
+        </div>
+
+        <!-- Contenedor del resultado que aparece al hacer clic en "Sí" -->
+        <div id="result-container" class="result-container">
+            <div class="gif-container">
+                <img src="img2.gif" alt="GIF Final">
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800">I knew it😍!</h2>
+        </div>
+    </div>
+    <script>
+      // Obtenemos las referencias a los elementos del DOM
+const questionContainer = document.getElementById('question-container');
+const resultContainer = document.getElementById('result-container');
+const yesBtn = document.getElementById('yes-btn');
+const noBtn = document.getElementById('no-btn');
+const container = document.querySelector('.container');
+
+// Añadimos un evento de clic al botón "Sí"
+yesBtn.addEventListener('click', () => {
+    // Ocultamos el contenedor de la pregunta
+    questionContainer.style.display = 'none';
+    // Mostramos el contenedor del resultado
+    resultContainer.style.display = 'block';
+    setTimeout(function() {
+      location.reload();
+    }, 6000); // 6000 milisegundos = 6 segundos
+});
+
+// Añadimos un evento para mover el botón "No"
+noBtn.addEventListener('mouseover', moveButton);
+noBtn.addEventListener('click', moveButton); // También para clics en dispositivos táctiles
+
+function moveButton() {
+    // Obtenemos las dimensiones del contenedor principal
+    const containerRect = container.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+
+    // Calculamos una posición aleatoria dentro del contenedor
+    // Restamos el tamaño del botón para que no se salga
+    const newTop = Math.random() * (containerRect.height - btnRect.height);
+    const newLeft = Math.random() * (containerRect.width - btnRect.width);
+
+    // Aplicamos la nueva posición al botón "No"
+    noBtn.style.position = 'absolute'; // Necesario para que top y left funcionen
+    noBtn.style.top = `${newTop}px`;
+    noBtn.style.left = `${newLeft}px`;
+}
+    </script>
+
+</body>
+</html>
